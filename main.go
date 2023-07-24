@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"sima/config"
+	"sima/routes"
+)
 
 func main() {
-	fmt.Println("Welcome to SIMA")
+	config.InitDB()
+	e := routes.New()
+	e.Logger.Fatal(e.Start(":8000"))
 }
