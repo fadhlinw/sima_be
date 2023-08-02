@@ -17,3 +17,6 @@ SIMA offers the following key features:
 - Monitor mosque finances, including cash balance and transactions with the congregation
 - Create Inventory for authenticated account
 - Create Transaksi for authenticated account and can upload proof transaction
+
+## Documentation
+You can view the documentation for the SIMA API at the following link: https://fadhli-naufal-wirawan.gitbook.io/sima-documentation/
