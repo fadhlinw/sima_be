@@ -19,8 +19,8 @@ func GetTransaksisController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
-		"users":  invs,
+		"status":     "success",
+		"transaksis": invs,
 	})
 }
 
@@ -35,8 +35,8 @@ func GetTransaksiController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "Inventori Tidak Ada")
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
-		"user":   inv,
+		"status":     "success",
+		"transaksis": inv,
 	})
 }
 
@@ -116,8 +116,8 @@ func CreateTransaksiController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"status": "success",
-		"user":   transaksiResponse,
+		"status":     "success",
+		"transaksis": transaksiResponse,
 	})
 }
 

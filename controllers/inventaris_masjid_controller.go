@@ -17,8 +17,8 @@ func GetInventorisController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
-		"users":  invs,
+		"status":     "success",
+		"inventoris": invs,
 	})
 }
 
@@ -33,8 +33,8 @@ func GetInventoriController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "Inventori Tidak Ada")
 	}
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": "success",
-		"user":   inv,
+		"status":     "success",
+		"inventoris": inv,
 	})
 }
 
@@ -64,8 +64,8 @@ func CreateInventoriController(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"status": "success",
-		"user":   inventoriResponse,
+		"status":     "success",
+		"inventoris": inventoriResponse,
 	})
 }
 
