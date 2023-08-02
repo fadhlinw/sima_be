@@ -58,8 +58,6 @@ func CreateTransaksiController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid ID")
 	}
 
-	idmasjid = int(transaksi.MasjidID)
-
 	lastTotalKas, err := GetLastTotalKasByID(idmasjid)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to get last total kas")
