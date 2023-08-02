@@ -50,7 +50,7 @@ func GetLastTotalKasByID(id int) (float64, error) {
 	return lastTotalKas, nil
 }
 
-func CreateTransaksiMasukController(c echo.Context) error {
+func CreateTransaksiController(c echo.Context) error {
 	var transaksi models.Transaksi
 
 	idmasjid, err := strconv.Atoi(c.Param("id"))

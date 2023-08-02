@@ -18,7 +18,7 @@ func InitDB() {
 		panic("error loading .env file")
 	}
 
-	DSN := os.Getenv("DB_DSN_LOCAL")
+	DSN := os.Getenv("DB_DSN")
 
 	var dberr error
 	DB, err = gorm.Open(mysql.Open(DSN), &gorm.Config{})
