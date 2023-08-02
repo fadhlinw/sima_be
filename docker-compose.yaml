@@ -1,0 +1,10 @@
+services:
+
+  app:
+    image: sima_container
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports: # host:container
+      - "8000:8000"
+    restart: always

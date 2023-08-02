@@ -53,7 +53,7 @@ func LoginUserController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
-	UserResponse := models.MasjidResponse{int(user.ID), user.NamaMasjid, user.Email, user.NamaTakmir, user.AlamatMasjid, user.KontakPerson, token}
+	UserResponse := models.MasjidResponse{ID: int(user.ID), NamaMasjid: user.NamaMasjid, Email: user.Email, NamaTakmir: user.NamaTakmir, AlamatMasjid: user.AlamatMasjid, KontakPerson: user.KontakPerson, Token: token}
 
 	return c.JSON(http.StatusCreated, map[string]interface{}{
 		"status": "success",
@@ -64,13 +64,35 @@ func LoginUserController(c echo.Context) error {
 func CreateUserController(c echo.Context) error {
 	var user models.Masjid
 
+	fileHeader, err := c.FormFile("photo")
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Failed to get the file from request")
+	}
+
+	uploadedURL, err := uploadFile(fileHeader)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to upload file to S3")
+	}
+
 	if err := c.Bind(&user); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
 	}
 
-	err := database.GetUserbyEmail(user.Email)
+	user.ProfilURL = uploadedURL
+
+	err = database.GetUserbyEmail(user.Email)
 	if err == nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Email Sudah Terdaftar")
+	}
+
+	masjidResponse := models.MasjidResponse{
+		ID:           int(user.ID),
+		NamaMasjid:   user.NamaMasjid,
+		Email:        user.Email,
+		NamaTakmir:   user.NamaTakmir,
+		AlamatMasjid: user.AlamatMasjid,
+		KontakPerson: user.KontakPerson,
+		ProfilURL:    user.ProfilURL,
 	}
 
 	err = database.CreateUser(&user)
@@ -80,7 +102,7 @@ func CreateUserController(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, map[string]interface{}{
 		"status": "success",
-		"user":   user,
+		"user":   masjidResponse,
 	})
 }
 
