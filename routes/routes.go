@@ -29,7 +29,7 @@ func New() *echo.Echo {
 	eJWT.Use(mid.JWT([]byte(os.Getenv("SECRET_JWT"))))
 	eJWT.DELETE("/masjids/:id", controllers.DeleteUserController)
 	eJWT.PUT("/masjids/:id", controllers.UpdateUserController)
-	eJWT.POST("/inventoris/:id", controllers.CreateInventoriController)
+	eJWT.POST("/inventori-create/:id", controllers.CreateInventoriController)
 	eJWT.DELETE("/inventoris/:id", controllers.DeleteInventoriController)
 	eJWT.PUT("/inventoris", controllers.UpdateInventoriController)
 	eJWT.POST("/transaksi-create/:id", controllers.CreateTransaksiController)
