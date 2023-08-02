@@ -14,7 +14,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd app
+          cd aps
           git pull origin main
           go test -v ./..
-          docker-compose down && docker-compose up --build -d
+          docker-compose up --build -d
