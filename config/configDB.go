@@ -1,21 +1,29 @@
 package config
 
 import (
+	"os"
 	"sima/models"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-const DSN = "root:12345@tcp(localhost:3306)/sima?charset=utf8&parseTime=True&loc=Local"
-
 func InitDB() {
-	var err error
+
+	err := godotenv.Load()
+	if err != nil {
+		panic("error loading .env file")
+	}
+
+	DSN := os.Getenv("DB_DSN_LOCAL")
+
+	var dberr error
 	DB, err = gorm.Open(mysql.Open(DSN), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		panic(dberr)
 	}
 	InitialMigration()
 }
@@ -23,5 +31,5 @@ func InitDB() {
 func InitialMigration() {
 	DB.AutoMigrate(&models.Masjid{})
 	DB.AutoMigrate(&models.Inventori{})
-	DB.AutoMigrate(models.TransaksiKeuangan{})
+	DB.AutoMigrate(models.Transaksi{})
 }

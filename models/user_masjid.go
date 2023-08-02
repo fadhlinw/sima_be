@@ -12,8 +12,9 @@ type Masjid struct {
 	NamaTakmir        string `json:"nama_takmir"`
 	AlamatMasjid      string `json:"alamat_masjid"`
 	KontakPerson      string `json:"kontak_person"`
+	ProfilURL         string `json:"profil_url"`
 	Inventaris        []Inventori
-	TransaksiKeuangan []TransaksiKeuangan
+	TransaksiKeuangan []Transaksi
 }
 
 type MasjidResponse struct {
@@ -23,5 +24,6 @@ type MasjidResponse struct {
 	NamaTakmir   string `json:"nama_takmir"`
 	AlamatMasjid string `json:"alamat_masjid"`
 	KontakPerson string `json:"kontak_person"`
+	ProfilURL    string `json:"profil_url"`
 	Token        string `json:"token"`
 }

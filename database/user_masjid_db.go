@@ -15,7 +15,7 @@ func GetUsers() (interface{}, error) {
 
 func GetUser(id int) (*models.Masjid, error) {
 	user := &models.Masjid{}
-	if err := config.DB.First(user, id).Error; err != nil {
+	if err := config.DB.Preload("Inventaris").Preload("TransaksiKeuangan").First(user, id).Error; err != nil {
 		return nil, err
 	}
 	return user, nil
