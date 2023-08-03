@@ -16,5 +16,6 @@ jobs:
         script: |
           cd aps
           git pull origin main
+          cp ../.env aps/
           go test -v ./..
           docker-compose down && docker-compose up --build -d
