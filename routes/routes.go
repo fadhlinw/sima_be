@@ -31,9 +31,9 @@ func New() *echo.Echo {
 	eJWT.PUT("/masjids/:id", controllers.UpdateUserController)
 	eJWT.POST("/inventori-create/:id", controllers.CreateInventoriController)
 	eJWT.DELETE("/inventoris/:id", controllers.DeleteInventoriController)
-	eJWT.PUT("/inventoris", controllers.UpdateInventoriController)
+	eJWT.PUT("/inventoris/:id", controllers.UpdateInventoriController)
 	eJWT.POST("/transaksi-create/:id", controllers.CreateTransaksiController)
-	eJWT.DELETE("/transaksi/:id", controllers.DeleteTransaksiController)
-	eJWT.PUT("/transaksi", controllers.UpdateTransaksiController)
+	eJWT.DELETE("/transaksis/:id", controllers.DeleteTransaksiController)
+	eJWT.PUT("/transaksis/:id", controllers.UpdateTransaksiController)
 	return e
 }
