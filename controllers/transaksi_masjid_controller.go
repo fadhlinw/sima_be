@@ -40,6 +40,16 @@ func GetTransaksiController(c echo.Context) error {
 	})
 }
 
+func GetLastTransaksiIDByMasjidID(idmasjid int) (uint, error) {
+	var maxID uint
+	err := config.DB.Model(&models.Transaksi{}).Where("masjid_id = ?", idmasjid).Order("id desc").Select("id").Limit(1).Scan(&maxID).Error
+	if err != nil {
+		return 0, err
+	}
+
+	return maxID, nil
+}
+
 func GetLastTotalKasByID(id int) (float64, error) {
 	var lastTotalKas float64
 	err := config.DB.Model(&models.Transaksi{}).Where("id = ?", id).Order("id desc").Limit(1).Pluck("total_kas", &lastTotalKas).Error
@@ -56,11 +66,6 @@ func CreateTransaksiController(c echo.Context) error {
 	idmasjid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Invalid ID")
-	}
-
-	lastTotalKas, err := GetLastTotalKasByID(idmasjid)
-	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to get last total kas")
 	}
 
 	fileHeader, err := c.FormFile("photo")
@@ -80,6 +85,17 @@ func CreateTransaksiController(c echo.Context) error {
 	transaksi.MasjidID = uint(idmasjid)
 
 	transaksi.PhotoURL = uploadedURL
+
+	// Mendapatkan nilai TotalKas sebelum menyimpan transaksi ke database
+	lastTransaksiID, err := GetLastTransaksiIDByMasjidID(idmasjid)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to get last transaksi ID")
+	}
+
+	lastTotalKas, err := GetLastTotalKasByID(int(lastTransaksiID))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to get last total kas")
+	}
 
 	transaksiResponse := models.Transaksi{
 		NamaTransaksi:      transaksi.NamaTransaksi,
