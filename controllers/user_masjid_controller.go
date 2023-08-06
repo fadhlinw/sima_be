@@ -64,6 +64,15 @@ func LoginUserController(c echo.Context) error {
 func CreateUserController(c echo.Context) error {
 	var user models.Masjid
 
+	if err := c.Bind(&user); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
+	}
+
+	err := database.GetUserbyEmail(user.Email)
+	if err == nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "Email Sudah Terdaftar")
+	}
+
 	fileHeader, err := c.FormFile("photo")
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "Failed to get the file from request")
@@ -74,16 +83,7 @@ func CreateUserController(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to upload file to S3")
 	}
 
-	if err := c.Bind(&user); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Invalid request payload")
-	}
-
 	user.ProfilURL = uploadedURL
-
-	err = database.GetUserbyEmail(user.Email)
-	if err == nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "Email Sudah Terdaftar")
-	}
 
 	masjidResponse := models.MasjidResponse{
 		ID:           int(user.ID),
