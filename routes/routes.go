@@ -13,6 +13,7 @@ func New() *echo.Echo {
 	e := echo.New()
 
 	middleware.LogMiddleware(e)
+	e.Use(mid.CORS())
 
 	e.GET("/masjids", controllers.GetUsersController)
 	e.GET("/masjids/:id", controllers.GetUserController)
