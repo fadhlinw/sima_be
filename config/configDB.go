@@ -23,6 +23,7 @@ func InitDB() {
 	var dberr error
 	DB, err = gorm.Open(mysql.Open(DSN), &gorm.Config{})
 	if err != nil {
+		dberr = err
 		panic(dberr)
 	}
 	InitialMigration()
