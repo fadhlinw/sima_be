@@ -42,8 +42,7 @@ func init() {
 }
 
 // SetupBucket : create bucket
-<<<<<<< Updated upstream
+
 // Golang
-=======
+
 // Stash
->>>>>>> Stashed changes
