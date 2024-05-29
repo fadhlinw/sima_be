@@ -34,3 +34,5 @@ func InitialMigration() {
 	DB.AutoMigrate(&models.Inventori{})
 	DB.AutoMigrate(models.Transaksi{})
 }
+
+// Config DB
