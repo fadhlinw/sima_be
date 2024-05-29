@@ -40,3 +40,5 @@ func init() {
 
 	Uploader = s3manager.NewUploader(awsSession)
 }
+
+// SetupBucket : create bucket
